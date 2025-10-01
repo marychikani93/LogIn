@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">LogInTopGolf</string>
+    <string name="error_message1">Your username or password are incorrect</string>
+    <string name="error_message2">Not able to Log In, please try again</string>
+    <string name="username_placeholder">Insert your username</string>
+    <string name="password_placeholder">Insert your password</string>
+    <string name="username_label">Username: </string>
+    <string name="password_label">Password: </string>
+    <string name="login_button_text">LOG IN</string>
+    <string name="logout_button_text">LOG OUT</string>
+    <string name="content_description_username">UserNameField</string>
+    <string name="content_description_password">PasswordField</string>
 </resources>

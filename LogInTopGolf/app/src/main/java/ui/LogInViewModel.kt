@@ -1,7 +1,10 @@
 package ui
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
+import com.example.logintopgolf.R
 import data.LogInState
 import data.LogInSideEffect
 import data.LoginUiEvent
@@ -12,7 +15,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LogInViewModel : ViewModel() {
+class LogInViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _logInEffect = Channel<LogInSideEffect>()
     val loginEffect = _logInEffect.receiveAsFlow()
@@ -38,17 +41,6 @@ class LogInViewModel : ViewModel() {
         }
     }
 
-    private fun clearCredentials() {
-        _logInState.update {
-            it.copy(
-                username = "",
-                password = "",
-                isLoading = false,
-                errorMessage = null,
-            )
-        }
-    }
-
     private fun onClick() {
         viewModelScope.launch {
             _logInState.update {
@@ -56,18 +48,17 @@ class LogInViewModel : ViewModel() {
             }
             try {
                 if (logInState.value.isNotEmpty() &&
-                    logInState.value.password.uppercase() == "PASSWORD"
+                    logInState.value.password.uppercase() == PASSWORD_VALUE
                 ) {
                     _logInState.update {
                         it.copy(isLoading = false)
                     }
                     _logInEffect.send(LogInSideEffect.NavigateToWelcomeScreen(logInState.value.username))
-                    clearCredentials()
                 } else {
                     _logInState.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = "Your username or password are incorrect",
+                            errorMessage = application.getString(R.string.error_message1),
                         )
                     }
                 }
@@ -75,11 +66,14 @@ class LogInViewModel : ViewModel() {
                 _logInState.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = e.message ?: "Not able to Log In, please try again",
+                        errorMessage = e.message ?: application.getString(R.string.error_message2),
                     )
                 }
             }
         }
     }
 
+    companion object {
+        const val PASSWORD_VALUE = "PASSWORD"
+    }
 }

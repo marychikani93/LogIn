@@ -25,5 +25,4 @@ fun LogInScreen(
     Surface {
         LogInForm(logInViewModel)
     }
-
 }

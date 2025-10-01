@@ -25,11 +25,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import data.LoginUiEvent
 import ui.LogInViewModel
+import com.example.logintopgolf.R
 
 @Composable
 fun LogInForm(logInViewModel: LogInViewModel) {
@@ -58,7 +60,7 @@ fun LogInForm(logInViewModel: LogInViewModel) {
             onClick = {
                 logInViewModel.onLoginState(LoginUiEvent.LogIn)
             }) {
-            Text("LOG IN")
+            Text(stringResource(R.string.login_button_text))
         }
 
         if (state.isLoading) {
@@ -92,12 +94,12 @@ fun UserNameField(
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Person,
-                contentDescription = "UserNameField"
+                contentDescription = stringResource(R.string.content_description_username)
             )
         },
         modifier = modifier.padding(2.dp),
-        placeholder = { Text("Insert your username") },
-        label = { Text("Username: ") },
+        placeholder = { Text(stringResource(R.string.username_placeholder)) },
+        label = { Text(stringResource(R.string.username_label)) },
         singleLine = true,
     )
 }
@@ -127,12 +129,14 @@ fun PasswordField(
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Key,
-                contentDescription = "UserNameField"
+                contentDescription = stringResource(R.string.content_description_password)
             )
         },
         modifier = modifier.padding(2.dp),
-        placeholder = { Text("Insert your password") },
-        label = { Text("Password: ") },
+        placeholder = {
+            Text(stringResource(R.string.password_placeholder))
+        },
+        label = { Text(stringResource(R.string.password_label)) },
         singleLine = true,
     )
 }
