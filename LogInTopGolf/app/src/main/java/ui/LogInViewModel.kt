@@ -17,10 +17,13 @@ import kotlinx.coroutines.launch
 
 class LogInViewModel(application: Application) : AndroidViewModel(application) {
 
+    //To handle side-effect that should be consumed once by the UI
     private val _logInEffect = Channel<LogInSideEffect>()
-    val loginEffect = _logInEffect.receiveAsFlow()
+    val loginEffect = _logInEffect.receiveAsFlow() //expose as a flow for consumption
 
+    //backing property to avoid state updates from other classes
     private val _logInState = MutableStateFlow(LogInState())
+    //UI collects the data from this state and get any update
     val logInState: StateFlow<LogInState> = _logInState
 
     fun onLoginState(action: LoginUiEvent) {
@@ -53,6 +56,7 @@ class LogInViewModel(application: Application) : AndroidViewModel(application) {
                     _logInState.update {
                         it.copy(isLoading = false)
                     }
+                    //sending the event to the channel within a coroutine scope
                     _logInEffect.send(LogInSideEffect.NavigateToWelcomeScreen(logInState.value.username))
                 } else {
                     _logInState.update {
@@ -74,6 +78,6 @@ class LogInViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     companion object {
-        const val PASSWORD_VALUE = "PASSWORD"
+        const val PASSWORD_VALUE = "PASSWORD" //declare a compile-time constant
     }
 }

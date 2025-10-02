@@ -35,7 +35,7 @@ import com.example.logintopgolf.R
 
 @Composable
 fun LogInForm(logInViewModel: LogInViewModel) {
-    val state by logInViewModel.logInState.collectAsState()
+    val state by logInViewModel.logInState.collectAsState() //collects data to show latest value of the state
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -83,7 +83,7 @@ fun UserNameField(
     onChange: (String) -> Unit,
     modifier: Modifier,
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") } //make sure to save state even on configuration changes
 
     OutlinedTextField(
         value = text,

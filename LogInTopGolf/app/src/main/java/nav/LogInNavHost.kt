@@ -9,7 +9,7 @@ import ui.components.WelcomeScreen
 
 @Composable
 fun MyApp() {
-    val navController = rememberNavController()
+    val navController = rememberNavController() //manage the back stack and display appropriate screens
     NavHost(navController = navController, startDestination = "login") {
         composable("login") {
             LogInScreen(
@@ -18,7 +18,7 @@ fun MyApp() {
                 }
             )
         }
-        composable("welcomeScreen/{username}") { backStackEntry ->
+        composable("welcomeScreen/{username}") { backStackEntry -> //specify the argument in the rout string
             val username = backStackEntry.arguments?.getString("username")
             WelcomeScreen(username = username, onBackPressed = {
                 navController.navigate("login") {

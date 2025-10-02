@@ -1,5 +1,7 @@
 package data
 
+
+//Represents different states for the LogIn Screen
 data class LogInState(
     var username: String = "",
     var password: String = "",
